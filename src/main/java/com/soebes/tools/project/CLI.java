@@ -20,9 +20,10 @@ public class CLI {
         
     }
 
+    private PTCommandLine commands;
+    
     public void run(String[] args) {
         setReturnCode(0);
-        PTCommandLine commands = null;
         try {
             commands = new PTCommandLine(args);
         } catch (MissingCommandException e) {
@@ -68,6 +69,7 @@ public class CLI {
             //printVersion();
             System.out.println("Version:" + "0.1");
             System.out.println("Build Number:" + "UNKNOWN");
+
             return;
         }
 
@@ -107,6 +109,10 @@ public class CLI {
         return returnCode;
     }
 
+    public PTCommandLine getCommands() {
+        return commands;
+    }
+    
     public static void main(String[] args) {
         Injector injector = Guice.createInjector(new CLIModule());
         CLI cli = injector.getInstance(CLI.class);
@@ -114,4 +120,5 @@ public class CLI {
         System.exit(cli.getReturnCode());
     }
 
+    
 }

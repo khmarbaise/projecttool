@@ -26,6 +26,8 @@ public class CLITest {
         String[] args = { "checkout", "--repository", "first", "--repository", "second" };
         cli.run(args);
         assertThat(cli.getReturnCode()).isEqualTo(0);
+        CheckoutCommand checkoutCommand = cli.getCommands().getCheckoutCommand();
+        assertThat(checkoutCommand.getRepositories()).hasSize(2);
     }
 
     @Test
@@ -33,6 +35,8 @@ public class CLITest {
         String[] args = { "co", "--repository", "first", "--repository", "second" };
         cli.run(args);
         assertThat(cli.getReturnCode()).isEqualTo(0);
+        CheckoutCommand checkoutCommand = cli.getCommands().getCheckoutCommand();
+        assertThat(checkoutCommand.getRepositories()).hasSize(2);
     }
 
     @Test
@@ -40,6 +44,15 @@ public class CLITest {
         String[] args = { "checkout"};
         cli.run(args);
         assertThat(cli.getReturnCode()).isEqualTo(0);
+    }
+
+    @Test
+    public void checkoutXXX() {
+        String[] args = { "checkout", "--repository", "first" };
+        cli.run(args);
+        assertThat(cli.getReturnCode()).isEqualTo(0);
+        CheckoutCommand checkoutCommand = cli.getCommands().getCheckoutCommand();
+        assertThat(checkoutCommand.getRepositories()).hasSize(1);
     }
 
 }
