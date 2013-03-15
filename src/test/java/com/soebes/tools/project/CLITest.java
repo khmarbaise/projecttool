@@ -55,4 +55,31 @@ public class CLITest {
         assertThat(checkoutCommand.getRepositories()).hasSize(1);
     }
 
+    @Test
+    public void checkoutZZ() {
+        String[] args = { "checkout", "--repository", "first", "second", "third" };
+        cli.run(args);
+        assertThat(cli.getReturnCode()).isEqualTo(0);
+        CheckoutCommand checkoutCommand = cli.getCommands().getCheckoutCommand();
+        assertThat(checkoutCommand.getRepositories()).hasSize(3);
+    }
+
+    @Test
+    public void checkoutShouldDeliverThreeRepositories() {
+        String[] args = { "checkout", "--repository", "first", "second", "third" };
+        cli.run(args);
+        assertThat(cli.getReturnCode()).isEqualTo(0);
+        CheckoutCommand checkoutCommand = cli.getCommands().getCheckoutCommand();
+        assertThat(checkoutCommand.getRepositories()).hasSize(3);
+    }
+    
+    @Test
+    public void checkoutShouldDeliverDefaultRepositoriesIfNotDefinedOnCommandLine() {
+        String[] args = { "checkout" };
+        cli.run(args);
+        assertThat(cli.getReturnCode()).isEqualTo(0);
+        CheckoutCommand checkoutCommand = cli.getCommands().getCheckoutCommand();
+        assertThat(checkoutCommand.getRepositories()).hasSize(4);
+        assertThat(checkoutCommand.getRepositories()).isEqualTo(CheckoutCommand.DEFAULT_REPOSITORIES);
+    }
 }
