@@ -7,25 +7,28 @@ import org.tmatesoft.svn.core.SVNException;
 import com.beust.jcommander.MissingCommandException;
 import com.beust.jcommander.ParameterException;
 import com.google.inject.Guice;
+import com.google.inject.Inject;
 import com.google.inject.Injector;
-import com.soebes.tools.project.cli.PTCommandLine.Commands;
+import com.soebes.tools.project.cli.CLIPTCommandLine.Commands;
 
 public class CLI {
     private static Logger LOGGER = LogManager.getLogger(CLI.class.getName());
 
     private int returnCode = 0;
 
+    @Inject
+    private CheckOutCommand coCommand;
+
     public CLI() {
         LOGGER.info("Test message.");
-        
     }
 
-    private PTCommandLine commands;
+    private CLIPTCommandLine commands;
     
     public void run(String[] args) {
         setReturnCode(0);
         try {
-            commands = new PTCommandLine(args);
+            commands = new CLIPTCommandLine(args);
         } catch (MissingCommandException e) {
             LOGGER.warn("");
             LOGGER.warn("It looks like you used a wrong command .");
@@ -80,12 +83,12 @@ public class CLI {
             return;
         }
 
-
         switch (command) {
             case CHECKOUT:
-                CheckoutCommand coCommand = commands.getCheckoutCommand();
-                //??
+                coCommand.execute(commands);
+//                coCommand.doCheckout(commands.getCheckoutCommand());
                 break;
+
             default:
                 LOGGER.error("Unknown command in switch.");
                 setReturnCode(1);
@@ -110,14 +113,19 @@ public class CLI {
         return returnCode;
     }
 
-    public PTCommandLine getCommands() {
+    public CLIPTCommandLine getCommands() {
         return commands;
     }
-    
-    public static void main(String[] args) {
+
+    public static CLI execute(String[] args) {
         Injector injector = Guice.createInjector(new CLIModule());
         CLI cli = injector.getInstance(CLI.class);
         cli.run(args);
+        return cli;
+    }
+
+    public static void main(String[] args) {
+        CLI cli = execute(args);
         System.exit(cli.getReturnCode());
     }
 

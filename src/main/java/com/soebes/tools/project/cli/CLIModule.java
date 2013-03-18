@@ -5,5 +5,6 @@ import com.google.inject.AbstractModule;
 public class CLIModule extends AbstractModule {
     @Override
     protected void configure() {
+        bind(Command.class).to(CheckOutCommand.class);
     }
 }

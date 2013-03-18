@@ -13,6 +13,19 @@ Homepage
 Description
 -----------
 
+This tool assumes having a structure in the repositories like this:
+
+    repository
+       module1
+            /trunk
+            /tags
+            /branches
+       module2
+            /trunk
+            /tags
+            /branches
+
+
 pt co BRANCHNAME
 
 checkout from all repositories the given BRANCHNAME

@@ -1,5 +1,5 @@
 package com.soebes.tools.project.cli;
 
-public interface ICommand {
+public interface ICLICommand {
     boolean isHelp();
 }

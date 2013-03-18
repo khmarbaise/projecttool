@@ -7,8 +7,8 @@ import org.apache.log4j.Logger;
 
 import com.beust.jcommander.JCommander;
 
-public class PTCommandLine {
-    private static Logger LOGGER = Logger.getLogger(PTCommandLine.class);
+public class CLIPTCommandLine {
+    private static Logger LOGGER = Logger.getLogger(CLIPTCommandLine.class);
 
     public static final String PROGRAMM_NAME = "pt";
 
@@ -37,19 +37,19 @@ public class PTCommandLine {
         }
     };
 
-    private Map<Commands, ICommand> commandList = null;
+    private Map<Commands, ICLICommand> commandList = null;
 
-    private final MainCommand mainCommand;
+    private final CLIMainCommand mainCommand;
 
     private final JCommander commander;
 
-    public PTCommandLine(String[] args) {
-        mainCommand = new MainCommand();
+    public CLIPTCommandLine(String[] args) {
+        mainCommand = new CLIMainCommand();
         commander = new JCommander(mainCommand);
 
-        commandList = new HashMap<Commands, ICommand>();
+        commandList = new HashMap<Commands, ICLICommand>();
 
-        commandList.put(Commands.CHECKOUT, new CheckoutCommand());
+        commandList.put(Commands.CHECKOUT, new CLICheckoutCommand());
 
         for (Commands item : Commands.values()) {
             getCommander().addCommand(item.getCommandName(), commandList.get(item), item.getAliases());
@@ -68,7 +68,7 @@ public class PTCommandLine {
     public boolean isHelpForCommand() {
         boolean result = false;
         Commands command = getCommand();
-        ICommand baseCommand = commandList.get(command);
+        ICLICommand baseCommand = commandList.get(command);
         if (baseCommand == null) {
             result = false;
         } else {
@@ -92,12 +92,12 @@ public class PTCommandLine {
         return commander;
     }
 
-    public MainCommand getMainCommand() {
+    public CLIMainCommand getMainCommand() {
         return this.mainCommand;
     }
 
-    public CheckoutCommand  getCheckoutCommand() {
-        return (CheckoutCommand) commandList.get(Commands.CHECKOUT);
+    public CLICheckoutCommand  getCheckoutCommand() {
+        return (CLICheckoutCommand) commandList.get(Commands.CHECKOUT);
     }
     
 }

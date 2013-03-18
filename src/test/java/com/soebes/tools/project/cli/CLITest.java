@@ -2,87 +2,77 @@ package com.soebes.tools.project.cli;
 
 import static org.fest.assertions.Assertions.assertThat;
 
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-
-import com.soebes.tools.project.cli.CLI;
-import com.soebes.tools.project.cli.CheckoutCommand;
 
 public class CLITest {
 
-    private CLI cli;
-    
-    @BeforeMethod
-    public void beforeMethod() {
-        cli = new CLI();
-    }
-
     @Test
-    public void firstTest() {
+    public void shouldAcceptGlobalHelpOption() {
         String[] args = { "--help" };
-        cli.run(args);
+        CLI cli = CLI.execute(args);
         assertThat(cli.getReturnCode()).isEqualTo(0);
     }
 
     @Test
     public void CheckoutFullCommandNameTest() {
         String[] args = { "checkout", "--repository", "first", "--repository", "second" };
-        cli.run(args);
+        CLI cli = CLI.execute(args);
         assertThat(cli.getReturnCode()).isEqualTo(0);
-        CheckoutCommand checkoutCommand = cli.getCommands().getCheckoutCommand();
+        
+        CLICheckoutCommand checkoutCommand = cli.getCommands().getCheckoutCommand();
         assertThat(checkoutCommand.getRepositories()).hasSize(2);
     }
 
     @Test
     public void CheckoutAliasCommandNameTest() {
         String[] args = { "co", "--repository", "first", "--repository", "second" };
-        cli.run(args);
+        CLI cli = CLI.execute(args);
         assertThat(cli.getReturnCode()).isEqualTo(0);
-        CheckoutCommand checkoutCommand = cli.getCommands().getCheckoutCommand();
+        CLICheckoutCommand checkoutCommand = cli.getCommands().getCheckoutCommand();
         assertThat(checkoutCommand.getRepositories()).hasSize(2);
     }
 
     @Test
     public void CheckoutTest() {
         String[] args = { "checkout"};
-        cli.run(args);
+        CLI cli = CLI.execute(args);
         assertThat(cli.getReturnCode()).isEqualTo(0);
     }
 
     @Test
-    public void checkoutXXX() {
+    public void checkoutWithASingleRepository() {
         String[] args = { "checkout", "--repository", "first" };
-        cli.run(args);
+        CLI cli = CLI.execute(args);
         assertThat(cli.getReturnCode()).isEqualTo(0);
-        CheckoutCommand checkoutCommand = cli.getCommands().getCheckoutCommand();
+        CLICheckoutCommand checkoutCommand = cli.getCommands().getCheckoutCommand();
         assertThat(checkoutCommand.getRepositories()).hasSize(1);
     }
 
     @Test
     public void checkoutZZ() {
         String[] args = { "checkout", "--repository", "first", "second", "third" };
-        cli.run(args);
+        CLI cli = CLI.execute(args);
         assertThat(cli.getReturnCode()).isEqualTo(0);
-        CheckoutCommand checkoutCommand = cli.getCommands().getCheckoutCommand();
+        CLICheckoutCommand checkoutCommand = cli.getCommands().getCheckoutCommand();
         assertThat(checkoutCommand.getRepositories()).hasSize(3);
     }
 
     @Test
     public void checkoutShouldDeliverThreeRepositories() {
         String[] args = { "checkout", "--repository", "first", "second", "third" };
-        cli.run(args);
+        CLI cli = CLI.execute(args);
         assertThat(cli.getReturnCode()).isEqualTo(0);
-        CheckoutCommand checkoutCommand = cli.getCommands().getCheckoutCommand();
+        CLICheckoutCommand checkoutCommand = cli.getCommands().getCheckoutCommand();
         assertThat(checkoutCommand.getRepositories()).hasSize(3);
     }
     
     @Test
     public void checkoutShouldDeliverDefaultRepositoriesIfNotDefinedOnCommandLine() {
         String[] args = { "checkout" };
-        cli.run(args);
+        CLI cli = CLI.execute(args);
         assertThat(cli.getReturnCode()).isEqualTo(0);
-        CheckoutCommand checkoutCommand = cli.getCommands().getCheckoutCommand();
+        CLICheckoutCommand checkoutCommand = cli.getCommands().getCheckoutCommand();
         assertThat(checkoutCommand.getRepositories()).hasSize(4);
-        assertThat(checkoutCommand.getRepositories()).isEqualTo(CheckoutCommand.DEFAULT_REPOSITORIES);
+        assertThat(checkoutCommand.getRepositories()).isEqualTo(CLICheckoutCommand.DEFAULT_REPOSITORIES);
     }
 }
