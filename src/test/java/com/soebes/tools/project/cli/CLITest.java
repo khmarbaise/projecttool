@@ -1,9 +1,12 @@
-package com.soebes.tools.project;
+package com.soebes.tools.project.cli;
 
 import static org.fest.assertions.Assertions.assertThat;
 
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+
+import com.soebes.tools.project.cli.CLI;
+import com.soebes.tools.project.cli.CheckoutCommand;
 
 public class CLITest {
 

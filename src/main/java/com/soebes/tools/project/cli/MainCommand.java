@@ -1,4 +1,4 @@
-package com.soebes.tools.project;
+package com.soebes.tools.project.cli;
 
 import com.beust.jcommander.Parameter;
 import com.beust.jcommander.Parameters;

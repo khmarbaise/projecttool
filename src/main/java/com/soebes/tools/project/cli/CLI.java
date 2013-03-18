@@ -1,4 +1,4 @@
-package com.soebes.tools.project;
+package com.soebes.tools.project.cli;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -8,7 +8,7 @@ import com.beust.jcommander.MissingCommandException;
 import com.beust.jcommander.ParameterException;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
-import com.soebes.tools.project.PTCommandLine.Commands;
+import com.soebes.tools.project.cli.PTCommandLine.Commands;
 
 public class CLI {
     private static Logger LOGGER = LogManager.getLogger(CLI.class.getName());
@@ -67,6 +67,7 @@ public class CLI {
 
         if (commands.getMainCommand().isVersion()) {
             //printVersion();
+            //@TODO: Add property file which contains the version etc. from the maven build.
             System.out.println("Version:" + "0.1");
             System.out.println("Build Number:" + "UNKNOWN");
 

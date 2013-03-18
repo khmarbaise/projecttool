@@ -1,4 +1,4 @@
-package com.soebes.tools.project;
+package com.soebes.tools.project.cli;
 
 import java.util.HashMap;
 import java.util.Map;
